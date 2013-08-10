@@ -29,6 +29,8 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.appwidget.AppWidgetHostView;
 import android.appwidget.AppWidgetManager;
@@ -39,9 +41,11 @@ import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.Intent.ShortcutIconResource;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -117,6 +121,8 @@ public final class Launcher extends Activity
                    AllAppsView.Watcher, View.OnTouchListener {
     static final String TAG = "Launcher";
     static final boolean LOGD = false;
+
+    static final int DIALOG_CREATE_SHORTCUT = 1;
 
     static final boolean PROFILE_STARTUP = false;
     static final boolean DEBUG_WIDGETS = false;
@@ -246,6 +252,8 @@ public final class Launcher extends Activity
     private boolean mUserPresent = true;
     private boolean mVisible = false;
     private boolean mAttached = false;
+    
+    private CellLayout.CellInfo mAddItemCellInfo;
 
     private static LocaleConfiguration sLocaleConfiguration = null;
 
@@ -622,7 +630,14 @@ public final class Launcher extends Activity
             } else {
                 delayExitSpringLoadedMode = completeAdd(args);
             }
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_PICK_APPWIDGET) {
+            processShortcut(data);
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_CREATE_SHORTCUT) {
+            completeAddShortcut(data, mAddItemCellInfo.container, mAddItemCellInfo.screen, mAddItemCellInfo.cellX, mAddItemCellInfo.cellY);
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_PICK_APPLICATION) {
+            completeAddApplication(data, mAddItemCellInfo.container, mAddItemCellInfo.screen, mAddItemCellInfo.cellX, mAddItemCellInfo.cellY);
         }
+       
         mDragLayer.clearAnimatedView();
         // Exit spring loaded mode if necessary after cancelling the configuration of a widget
         exitSpringLoadedDragModeDelayed((resultCode != RESULT_CANCELED), delayExitSpringLoadedMode,
@@ -2207,7 +2222,7 @@ public final class Launcher extends Activity
         }
 
         resetAddInfo();
-        CellLayout.CellInfo longClickCellInfo = (CellLayout.CellInfo) v.getTag();
+        CellLayout.CellInfo longClickCellInfo = mAddItemCellInfo = (CellLayout.CellInfo) v.getTag();
         // This happens when long clicking an item with the dpad/trackball
         if (longClickCellInfo == null) {
             return true;
@@ -2222,7 +2237,8 @@ public final class Launcher extends Activity
                 // User long pressed on empty space
                 mWorkspace.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS,
                         HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
-                startWallpaper();
+//                startWallpaper();
+                showAddDialog();
             } else {
                 if (!(itemUnderLongClick instanceof Folder)) {
                     // User long pressed on an item
@@ -2232,6 +2248,15 @@ public final class Launcher extends Activity
         }
         return true;
     }
+    
+    private void showAddDialog() {
+        resetAddInfo();
+        mPendingAddInfo.container = LauncherSettings.Favorites.CONTAINER_DESKTOP;
+        mPendingAddInfo.screen = mWorkspace.getCurrentPage();
+        mWaitingForResult = true;
+        showDialog(DIALOG_CREATE_SHORTCUT);
+    }
+
 
     boolean isHotseatLayout(View layout) {
         return mHotseat != null && layout != null &&
@@ -2651,6 +2676,18 @@ public final class Launcher extends Activity
             dispatchOnLauncherTransitionEnd(toView, animated, true);
             mWorkspace.hideScrollingIndicator(false);
         }
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DIALOG_CREATE_SHORTCUT:
+                return new CreateShortcut().createDialog();
+//            case DIALOG_RENAME_FOLDER:
+//                return new RenameFolder().createDialog();
+        }
+
+        return super.onCreateDialog(id);
     }
 
     @Override
@@ -3465,6 +3502,7 @@ public final class Launcher extends Activity
      */
     public void bindAppsAdded(ArrayList<ApplicationInfo> apps) {
         setLoadOnResume();
+        removeDialog(DIALOG_CREATE_SHORTCUT);
 
         if (mAppsCustomizeContent != null) {
             mAppsCustomizeContent.addApps(apps);
@@ -3478,6 +3516,7 @@ public final class Launcher extends Activity
      */
     public void bindAppsUpdated(ArrayList<ApplicationInfo> apps) {
         setLoadOnResume();
+        removeDialog(DIALOG_CREATE_SHORTCUT);
         if (mWorkspace != null) {
             mWorkspace.updateShortcuts(apps);
         }
@@ -3493,6 +3532,7 @@ public final class Launcher extends Activity
      * Implementation of the method from LauncherModel.Callbacks.
      */
     public void bindAppsRemoved(ArrayList<ApplicationInfo> apps, boolean permanent) {
+    	removeDialog(DIALOG_CREATE_SHORTCUT);
         if (permanent) {
             mWorkspace.removeItems(apps);
         }
@@ -3726,6 +3766,115 @@ public final class Launcher extends Activity
             writer.println("  " + sDumpLogs.get(i));
         }
     }
+    
+    private void pickShortcut() {
+        Bundle bundle = new Bundle();
+
+        ArrayList<String> shortcutNames = new ArrayList<String>();
+        shortcutNames.add(getString(R.string.group_applications));
+        bundle.putStringArrayList(Intent.EXTRA_SHORTCUT_NAME, shortcutNames);
+
+        ArrayList<ShortcutIconResource> shortcutIcons = new ArrayList<ShortcutIconResource>();
+        shortcutIcons.add(ShortcutIconResource.fromContext(Launcher.this,
+                        R.drawable.ic_launcher_application));
+        bundle.putParcelableArrayList(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, shortcutIcons);
+
+        Intent pickIntent = new Intent(Intent.ACTION_PICK_ACTIVITY);
+        pickIntent.putExtra(Intent.EXTRA_INTENT, new Intent(Intent.ACTION_CREATE_SHORTCUT));
+        pickIntent.putExtra(Intent.EXTRA_TITLE, getText(R.string.title_select_shortcut));
+        pickIntent.putExtras(bundle);
+
+        startActivityForResult(pickIntent, REQUEST_PICK_SHORTCUT);
+    }
+
+    /**
+     * Displays the shortcut creation dialog and launches, if necessary, the
+     * appropriate activity.
+     */
+    private class CreateShortcut implements DialogInterface.OnClickListener,
+            DialogInterface.OnCancelListener, DialogInterface.OnDismissListener,
+            DialogInterface.OnShowListener {
+
+        private AddAdapter mAdapter;
+
+        Dialog createDialog() {
+            mAdapter = new AddAdapter(Launcher.this);
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(Launcher.this, 
+                    AlertDialog.THEME_HOLO_DARK);
+            builder.setAdapter(mAdapter, this);
+
+            AlertDialog dialog = builder.create();
+            dialog.setOnCancelListener(this);
+            dialog.setOnDismissListener(this);
+            dialog.setOnShowListener(this);
+
+            return dialog;
+        }
+
+        public void onCancel(DialogInterface dialog) {
+            mWaitingForResult = false;
+            cleanup();
+        }
+
+        public void onDismiss(DialogInterface dialog) {
+            mWaitingForResult = false;
+            cleanup();
+        }
+
+        private void cleanup() {
+            try {
+                dismissDialog(DIALOG_CREATE_SHORTCUT);
+            } catch (Exception e) {
+                // An exception is thrown if the dialog is not visible, which is fine
+            }
+        }
+
+        /**
+         * Handle the action clicked in the "Add to home" dialog.
+         */
+        public void onClick(DialogInterface dialog, int which) {
+            cleanup();
+
+            AddAdapter.ListItem item = (AddAdapter.ListItem) mAdapter.getItem(which);
+            switch (item.actionTag) {
+                case AddAdapter.ITEM_APPLICATION: {
+                    if (mAppsCustomizeTabHost != null) {
+                        mAppsCustomizeTabHost.selectAppsTab();
+                    }
+                    showAllApps(true);
+                    break;
+                }
+                case AddAdapter.ITEM_SHORTCUT: {
+                    // Insert extra item to handle picking application
+                    pickShortcut();
+                    break;
+                }
+                case AddAdapter.ITEM_APPWIDGET: {
+                	int appWidgetId = Launcher.this.mAppWidgetHost.allocateAppWidgetId();
+
+                    Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
+                    pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+                    // start the pick activity
+                    startActivityForResult(pickIntent, REQUEST_PICK_APPWIDGET);
+//                    if (mAppsCustomizeTabHost != null) {
+//                        mAppsCustomizeTabHost.selectWidgetsTab();
+//                    }
+//                    showAllApps(true);
+                    break;
+                }
+                case AddAdapter.ITEM_WALLPAPER: {
+                    startWallpaper();
+                    break;
+                }
+            }
+        }
+
+        public void onShow(DialogInterface dialog) {
+            mWaitingForResult = true;
+        }
+    }
+
 }
 
 interface LauncherTransitionable {
