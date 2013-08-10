@@ -95,7 +95,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 import com.launcherjellybean.android.DropTarget.DragObject;
 
 import java.io.DataInputStream;

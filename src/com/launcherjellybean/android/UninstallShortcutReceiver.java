@@ -25,7 +25,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.widget.Toast;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;

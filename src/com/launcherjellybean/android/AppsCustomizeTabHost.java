@@ -34,7 +34,7 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 import java.util.ArrayList;
 

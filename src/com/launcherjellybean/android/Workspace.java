@@ -55,7 +55,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 import com.launcherjellybean.android.FolderIcon.FolderRingAnimator;
 import com.launcherjellybean.android.LauncherSettings.Favorites;
 

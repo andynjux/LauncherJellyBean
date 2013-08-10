@@ -33,7 +33,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 import java.util.ArrayList;
 

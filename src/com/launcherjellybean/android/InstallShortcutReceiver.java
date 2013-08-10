@@ -25,7 +25,7 @@ import android.content.pm.PackageManager;
 import android.os.Debug;
 import android.widget.Toast;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;

@@ -16,7 +16,7 @@
 
 <com.launcherjellybean.android.PagedViewIcon
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.launcherjellybean.android"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.hanyi.launcher"
 
     style="@style/WorkspaceIcon.Portrait.AppsCustomize"
 

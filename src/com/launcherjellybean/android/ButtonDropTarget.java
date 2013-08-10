@@ -24,7 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 
 /**

@@ -33,7 +33,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 
 /**

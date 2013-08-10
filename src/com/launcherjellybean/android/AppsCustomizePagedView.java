@@ -61,7 +61,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 import com.launcherjellybean.android.DropTarget.DragObject;
 
 import java.util.ArrayList;

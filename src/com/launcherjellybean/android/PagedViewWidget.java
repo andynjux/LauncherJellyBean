@@ -28,7 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 /**
  * The linear layout used strictly for the widget/wallpaper tab of the customization tray

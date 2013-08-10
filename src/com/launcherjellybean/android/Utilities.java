@@ -34,7 +34,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
 import android.util.DisplayMetrics;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 /**
  * Various utilities shared amongst the Launcher's classes.

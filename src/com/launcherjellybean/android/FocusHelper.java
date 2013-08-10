@@ -24,7 +24,7 @@ import android.view.ViewParent;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

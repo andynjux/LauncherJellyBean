@@ -27,7 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RemoteViews;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 /**
  * {@inheritDoc}

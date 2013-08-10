@@ -39,7 +39,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 import java.util.HashMap;
 import java.util.Random;

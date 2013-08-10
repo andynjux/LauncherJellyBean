@@ -49,7 +49,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Xml;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 import com.launcherjellybean.android.LauncherSettings.Favorites;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -68,7 +68,7 @@ public class LauncherProvider extends ContentProvider {
 
     private static final int DATABASE_VERSION = 12;
 
-    static final String AUTHORITY = "com.launcherjellybean.android.settings";
+    static final String AUTHORITY = "com.hanyi.launcher.android.settings";
 
     static final String TABLE_FAVORITES = "favorites";
     static final String PARAMETER_NOTIFY = "notify";

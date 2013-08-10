@@ -15,7 +15,7 @@
 -->
 <com.launcherjellybean.android.Hotseat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.launcherjellybean.android"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.hanyi.launcher"
     launcher:cellCountX="1"
     launcher:cellCountY="@integer/hotseat_cell_count">
     <com.launcherjellybean.android.CellLayout

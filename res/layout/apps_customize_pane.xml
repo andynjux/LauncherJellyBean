@@ -15,7 +15,7 @@
 -->
 <com.launcherjellybean.android.AppsCustomizeTabHost
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:launcher="http://schemas.android.com/apk/res/com.launcherjellybean.android"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.hanyi.launcher"
     android:background="#FF000000">
     <LinearLayout
         android:id="@+id/apps_customize_content"

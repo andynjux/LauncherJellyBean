@@ -16,7 +16,7 @@
 
 package com.launcherjellybean.android;
 
-import com.launcherjellybean.android.R;
+import com.hanyi.launcher.R;
 
 import android.app.Activity;
 import android.app.DialogFragment;
