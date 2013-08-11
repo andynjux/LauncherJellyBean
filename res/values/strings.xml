@@ -142,6 +142,8 @@ s -->
     <!-- Menu item used to manage installed applications -->
     <string name="menu_manage_apps">Manage apps</string>
     <!-- Noun, menu item used to set the desktop's wallpaper -->
+    <string name="menu_change_font">Change Font</string>
+    <!-- Noun, menu item used to set the desktop's wallpaper -->
     <string name="menu_wallpaper">Wallpaper</string>
     <!-- Verb, menu item used to initiate global search -->
     <string name="menu_search">Search</string>
@@ -272,4 +274,6 @@ s -->
     <!-- Dummy string [CHAR_LIMIT=60] -->
     <string name="custom_workspace_cling_description_2"></string>
 
+    
+    <string name="font_file_invalid">字体文件不存在或者非法格式！</string>
 </resources>

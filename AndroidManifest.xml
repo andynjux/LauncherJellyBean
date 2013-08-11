@@ -99,6 +99,10 @@
             <meta-data android:name="android.wallpaper.preview"
                 android:resource="@xml/wallpaper_picker_preview" />
         </activity>
+        
+        <activity android:name="com.hanyi.launcher.font.TTFListActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar">
+        </activity>
 
         <activity android:name="com.launcherjellybean.android.RocketLauncher"
             android:label="@string/dream_name"

@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hanyi.launcher.R;
+import com.hanyi.launcher.font.FontConfig;
 
 /**
  * The linear layout used strictly for the widget/wallpaper tab of the customization tray

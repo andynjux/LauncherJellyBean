@@ -25,12 +25,13 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.hanyi.launcher.R;
+import com.hanyi.launcher.font.FontTextView;
 
 
 /**
  * Implements a DropTarget.
  */
-public class ButtonDropTarget extends TextView implements DropTarget, DragController.DragListener {
+public class ButtonDropTarget extends FontTextView implements DropTarget, DragController.DragListener {
 
     protected final int mTransitionDuration;
 

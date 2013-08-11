@@ -19,12 +19,13 @@ package com.launcherjellybean.android;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
-import android.widget.TextView;
+
+import com.hanyi.launcher.font.FontTextView;
 
 /**
  * We use a custom tab view to process our own focus traversals.
  */
-public class AccessibleTabView extends TextView {
+public class AccessibleTabView extends FontTextView {
     public AccessibleTabView(Context context) {
         super(context);
     }

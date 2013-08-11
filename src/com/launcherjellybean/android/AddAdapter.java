@@ -28,6 +28,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.hanyi.launcher.R;
+import com.hanyi.launcher.font.FontConfig;
 
 /**
  * Adapter showing the types of items that can be added to a {@link Workspace}.

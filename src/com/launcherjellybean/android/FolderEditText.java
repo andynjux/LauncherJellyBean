@@ -1,9 +1,12 @@
 package com.launcherjellybean.android;
 
+import com.hanyi.launcher.font.FontConfig;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.widget.EditText;
+import android.widget.TextView.BufferType;
 
 public class FolderEditText extends EditText {
 
@@ -33,4 +36,13 @@ public class FolderEditText extends EditText {
         }
         return super.onKeyPreIme(keyCode, event);
     }
+    
+    @Override
+	public void setText(CharSequence text, BufferType type) {
+		if (FontConfig.sTypeFac != null) {
+			setTypeface(FontConfig.sTypeFac);
+		}
+		super.setText(text, type);
+	}
+
 }

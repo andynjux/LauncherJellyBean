@@ -27,17 +27,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
+            <com.hanyi.launcher.font.FontTextView
                 style="@style/ClingTitleText"
                 android:text="@string/workspace_cling_title" />
-            <TextView
+            <com.hanyi.launcher.font.FontTextView
                 style="@style/ClingText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/workspace_cling_move_item" />
         </LinearLayout>
     </FrameLayout>
-    <TextView
+    <com.hanyi.launcher.font.FontTextView
         style="@style/ClingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

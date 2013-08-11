@@ -19,13 +19,14 @@ package com.launcherjellybean.android;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
-import android.widget.TextView;
+
+import com.hanyi.launcher.font.FontTextView;
 
 /**
  * An icon on a PagedView, specifically for items in the launcher's paged view (with compound
  * drawables on the top).
  */
-public class PagedViewIcon extends TextView {
+public class PagedViewIcon extends FontTextView {
     /** A simple callback interface to allow a PagedViewIcon to notify when it has been pressed */
     public static interface PressedCallback {
         void iconPressed(PagedViewIcon icon);

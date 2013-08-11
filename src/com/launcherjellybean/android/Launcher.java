@@ -17,6 +17,21 @@
 
 package com.launcherjellybean.android;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.animation.Animator;
@@ -43,9 +58,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Intent.ShortcutIconResource;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.Intent.ShortcutIconResource;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -91,27 +106,16 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Advanceable;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hanyi.launcher.R;
+import com.hanyi.launcher.font.FontConfig;
+import com.hanyi.launcher.font.TTFListActivity;
 import com.launcherjellybean.android.DropTarget.DragObject;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Default launcher application.
@@ -133,6 +137,7 @@ public final class Launcher extends Activity
     private static final int MENU_MANAGE_APPS = MENU_WALLPAPER_SETTINGS + 1;
     private static final int MENU_SYSTEM_SETTINGS = MENU_MANAGE_APPS + 1;
     private static final int MENU_HELP = MENU_SYSTEM_SETTINGS + 1;
+    private static final int MENU_CHANGE_FONT = MENU_HELP + 1;
 
     private static final int REQUEST_CREATE_SHORTCUT = 1;
     private static final int REQUEST_CREATE_APPWIDGET = 5;
@@ -334,6 +339,8 @@ public final class Launcher extends Activity
         }
 
         super.onCreate(savedInstanceState);
+        FontConfig.ceateInstance(this);
+        
         LauncherApplication app = ((LauncherApplication)getApplication());
         mSharedPrefs = getSharedPreferences(LauncherApplication.getSharedPreferencesKey(),
                 Context.MODE_PRIVATE);
@@ -1435,6 +1442,8 @@ public final class Launcher extends Activity
     @Override
     public void onDestroy() {
         super.onDestroy();
+        
+        FontConfig.getInstance().destory();
 
         // Remove all pending runnables
         mHandler.removeMessages(ADVANCE_MSG);
@@ -1468,7 +1477,7 @@ public final class Launcher extends Activity
         mWorkspace.removeAllViews();
         mWorkspace = null;
         mDragController = null;
-
+        
         // AOSP Change
         //ValueAnimator.clearAllAnimations();
     }
@@ -1533,6 +1542,13 @@ public final class Launcher extends Activity
         help.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 
+        Intent changeFont = new Intent(Launcher.this, TTFListActivity.class);
+        changeFont.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        menu.add(0, MENU_CHANGE_FONT, 0, R.string.menu_change_font)
+        	.setIcon(android.R.drawable.ic_menu_gallery)
+        	.setIntent(changeFont)
+        	.setAlphabeticShortcut('F');
         menu.add(MENU_GROUP_WALLPAPER, MENU_WALLPAPER_SETTINGS, 0, R.string.menu_wallpaper)
             .setIcon(android.R.drawable.ic_menu_gallery)
             .setAlphabeticShortcut('W');
@@ -3877,6 +3893,27 @@ public final class Launcher extends Activity
         }
     }
 
+	public void refreshFont() {
+//		PagedView drawer = mAppsCustomizeContent;
+//		PagedView desk = mWorkspace;
+		changeFont(mDragLayer);
+	}
+	
+	private void changeFont(View view) {
+		if (view == null) return;
+		if (FontConfig.sTypeFac == null) return;
+		if (view instanceof TextView) {
+			((TextView)view).setTypeface(FontConfig.sTypeFac);
+		} else if (view instanceof EditText) {
+			((EditText)view).setTypeface(FontConfig.sTypeFac);
+		} else if (view instanceof ViewGroup) {
+			ViewGroup viewGroup = (ViewGroup)view;
+			final int count = viewGroup.getChildCount();
+			for (int i=0;i<count;i++) {
+				changeFont(viewGroup.getChildAt(i));
+			}
+		}
+	}
 }
 
 interface LauncherTransitionable {
