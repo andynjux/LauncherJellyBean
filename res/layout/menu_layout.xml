@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/menu_desk_height"
+    android:background="@color/menu_bg_color"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/adding_row_one"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/menu_fonts"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_menu_fonts"
+            android:gravity="center"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:singleLine="true"
+            android:text="更换字体"
+            android:textColor="@color/menu_item_color_selector"
+            android:textSize="@dimen/menu_item_text_size"
+            android:background="@drawable/menu_item_selector" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_v_line"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/menu_app_manage"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_menu_manage"
+            android:gravity="center"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:singleLine="true"
+            android:text="应用管理"
+            android:textColor="@color/menu_item_color_selector"
+            android:textSize="@dimen/menu_item_text_size"
+            android:background="@drawable/menu_item_selector" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_v_line"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/menu_system_settings"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:clickable="true"
+            android:drawableTop="@drawable/menu_system_settings"
+            android:gravity="center"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:singleLine="true"
+            android:text="系统设置"
+            android:textColor="@color/menu_item_color_selector"
+            android:textSize="@dimen/menu_item_text_size"
+            android:background="@drawable/menu_item_selector" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_v_line"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/menu_wallpaper"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_menu_gallery"
+            android:gravity="center"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:singleLine="true"
+            android:text="壁纸"
+            android:textColor="@color/menu_item_color_selector"
+            android:textSize="@dimen/menu_item_text_size"
+            android:background="@drawable/menu_item_selector" />
+    </LinearLayout>
+
+</LinearLayout>

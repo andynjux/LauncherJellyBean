@@ -19,7 +19,9 @@
 -->
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hanyi.launcher">
+    package="com.hanyi.launcher"
+    android:versionCode="1"
+    android:versionName="1.0">
 
     <uses-sdk android:targetSdkVersion="14"
         android:minSdkVersion="16" />

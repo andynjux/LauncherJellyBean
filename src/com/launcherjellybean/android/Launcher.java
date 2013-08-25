@@ -23,6 +23,7 @@ import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -321,6 +322,8 @@ public final class Launcher extends Activity
         int cellY;
     }
 
+    private WeakReference<MenuHelper> mMenuHelper = null;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (DEBUG_STRICT_MODE) {
@@ -803,6 +806,26 @@ public final class Launcher extends Activity
         }
 
         return handled;
+    }
+    
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            getMenuHelper().showDeskMenu();
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+    private MenuHelper getMenuHelper() {
+        MenuHelper helper;
+        if (mMenuHelper == null || mMenuHelper.get() == null) {
+            helper = new MenuHelper(this, mDragLayer);
+            mMenuHelper = new WeakReference<MenuHelper>(helper);
+        } else {
+            helper = mMenuHelper.get();
+        }
+        return helper;
     }
 
     private String getTypedText() {
@@ -3897,6 +3920,9 @@ public final class Launcher extends Activity
 //		PagedView drawer = mAppsCustomizeContent;
 //		PagedView desk = mWorkspace;
 		changeFont(mDragLayer);
+		if (mMenuHelper != null && mMenuHelper.get() != null) {
+			mMenuHelper.get().changeFont();
+		}
 	}
 	
 	private void changeFont(View view) {
@@ -3912,6 +3938,33 @@ public final class Launcher extends Activity
 			for (int i=0;i<count;i++) {
 				changeFont(viewGroup.getChildAt(i));
 			}
+		}
+	}
+
+	public void onMenuPressed(View v) {
+		switch (v.getId()) {
+		case R.id.menu_app_manage:
+			Intent manageApps = new Intent(Settings.ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS);
+	        manageApps.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+	                | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+	        startActivity(manageApps);
+			break;
+		case R.id.menu_fonts:
+			Intent changeFont = new Intent(Launcher.this, TTFListActivity.class);
+	        changeFont.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        startActivity(changeFont);
+			break;
+		case R.id.menu_system_settings:
+			Intent settings = new Intent(android.provider.Settings.ACTION_SETTINGS);
+	        settings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+	                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+	        startActivity(settings);
+			break;
+		case R.id.menu_wallpaper:
+			startWallpaper();
+			break;
+		default:
+			break;
 		}
 	}
 }

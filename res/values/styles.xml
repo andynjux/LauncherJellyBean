@@ -190,4 +190,10 @@
     </style>
     <style name="CustomClingText">
     </style>
+    
+    <!-- custom menu view -->
+    <style name="MenuToggleAnimation">
+        <item name="android:windowEnterAnimation">@anim/menu_down_to_up</item>
+        <item name="android:windowExitAnimation">@anim/menu_up_to_down</item>
+    </style>
 </resources>

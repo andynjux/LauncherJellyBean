@@ -30,4 +30,10 @@
     <color name="workspace_all_apps_and_delete_zone_text_color">#CCFFFFFF</color>
     <color name="workspace_all_apps_and_delete_zone_text_shadow_color">#A0000000</color>
     <color name="workspace_icon_text_color">#FFF</color>
+    
+    <!-- custom menu -->
+    <color name="menu_item_press">#1594e9</color>
+    <color name="menu_bg_color">#2c2c2c</color>
+    <color name="menu_item_text_color_normal">#80FFFFFF</color>
+    <color name="menu_item_text_color_selected">#9aFFFFFF</color>
 </resources>

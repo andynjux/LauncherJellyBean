@@ -154,4 +154,8 @@
     <dimen name="workspace_width_gap_port">0dp</dimen>
     <dimen name="workspace_height_gap_land">0dp</dimen>
     <dimen name="workspace_height_gap_port">0dp</dimen>
+    
+    <!-- custom menu view -->
+    <dimen name="menu_desk_height">74dip</dimen>
+    <dimen name="menu_item_text_size">12sp</dimen>
 </resources>
